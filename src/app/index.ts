@@ -3,6 +3,7 @@ import { Client, Message } from "node-osc";
 import SpotifyWebApi from "spotify-web-api-node";
 import nodePersist from "node-persist";
 import { Server } from "http";
+import dotenv from "dotenv";
 
 const spotifyApi = new SpotifyWebApi({
   redirectUri: "http://localhost:8888/callback",
@@ -15,6 +16,7 @@ const oscClient = new Client("localhost", 9000);
 let currentSong: string;
 
 const setupApp = async () => {
+  dotenv.config();
   process.on("SIGTERM", () => {
     if (server) server.close();
     oscClient.close();
@@ -88,7 +90,7 @@ const startListening = async (
       oscClient.send(
         new Message(
           "/chatbox/input",
-          `Playing ${item.name} by ${item.artists[0].name}`,
+          `Listening to ${item.name} by ${item.artists[0].name}`,
           true,
           false
         )
