@@ -23,6 +23,7 @@ const setupApp = async () => {
 
   const storage = nodePersist.create();
   await storage.init({ dir: "data" });
+
   const { access_token, refresh_token } =
     (await storage.getItem("tokens")) || {};
 
@@ -32,7 +33,7 @@ const setupApp = async () => {
   }
   const app = express();
 
-  app.get("/login", (req, res) => {
+  app.get("/login", (_, res) => {
     res.redirect(
       spotifyApi.createAuthorizeURL(["user-read-playback-state"], "setup")
     );
@@ -82,8 +83,8 @@ const startListening = async (
     const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
 
     if (item && item.id !== currentSong) {
-        currentSong = item.id;
-        console.log(`Now playing: ${item.name}`);
+      currentSong = item.id;
+      console.log(`Now playing: ${item.name}`);
       oscClient.send(
         new Message(
           "/chatbox/input",
@@ -91,7 +92,7 @@ const startListening = async (
           true,
           false
         )
-        );
+      );
     }
   }, 1000);
 };
