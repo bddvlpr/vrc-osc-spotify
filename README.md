@@ -8,6 +8,7 @@
     - [Using Yarn](#using-yarn)
   - [Setup](#setup)
   - [Update](#update)
+  - [Screenshots](#screenshots)
 
 ## Prerequisites
 To allow the application to interface with Spotify, you'll need to create a OAuth application in [Spotify's developer portal](https://developer.spotify.com/dashboard/applications). 
@@ -46,3 +47,7 @@ That's it! Make sure you have OSC enabled and have chatboxes shown.
 
 ## Update
 If you want to update the project, simply make sure you're navigated into the right directory (`cd bad-vrc-osc`) and enter `git pull`.
+
+## Screenshots
+
+![Example](https://i.imgur.com/ha3hOOD.png)
