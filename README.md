@@ -14,9 +14,9 @@ To allow the application to interface with Spotify, you'll need to create a OAut
 In order to do this, I've created a step-by-step tutorial below.
 
 1. Open [the Spotify developer portal](https://developer.spotify.com/dashboard/applications) in any browser of your choice.
-2. Press 'CREATE AN APP' and give it a name and description. This shouldn't matter but make sure you can identify it in case it ever breaks.
-3. Once you've created an app, click on it to go to its overview. On this page you'll need to get the two parameters called 'Client ID' and 'Client Secret'. **Never share the Client Secret with anyone besides yourself.**
-4. Go to 'Edit Settings', scroll down to 'Redirect URIs' and add `http://localhost:8888/callback`. Press save at the bottom and you're good to go.
+2. Press 'CREATE AN APP' and give it a name and description. This shouldn't matter but make sure you can identify it in case it ever breaks. ![Create](https://i.imgur.com/QZRoDqH.png)
+3. Once you've created an app, click on it to go to its overview. On this page you'll need to get the two parameters called 'Client ID' and 'Client Secret'. **Never share the Client Secret with anyone besides yourself.** ![Client](https://i.imgur.com/t9aKZmy.png)
+4. Go to 'Edit Settings', scroll down to 'Redirect URIs' and add `http://localhost:8888/callback`. Press save at the bottom and you're good to go. ![Callback Tab](https://i.imgur.com/wHd2eGY.png)
 
 ## Installation
 For both methods you'll need to have [Git](https://git-scm.com/), a version control system, installed.
