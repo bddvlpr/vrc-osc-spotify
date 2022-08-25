@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+/build
+/dist
+/data
+/ssl
+/package
+.env
+.env.*
+!.env.example
