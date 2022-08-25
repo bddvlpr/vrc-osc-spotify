@@ -73,33 +73,35 @@ const startListening = async (
   spotifyApi.setAccessToken(access_token);
   spotifyApi.setRefreshToken(refresh_token);
 
-  setInterval(async () => {
-    const data = await spotifyApi.refreshAccessToken();
-    const { access_token } = data.body;
+  await refreshToken();
 
-    spotifyApi.setAccessToken(access_token);
-    console.log(`Access token refreshed!`);
-  }, (expires_in / 2) * 1000);
+  setInterval(async () => await refreshToken(), (expires_in / 2) * 1000);
 
   setInterval(async () => {
     const playback = await spotifyApi.getMyCurrentPlaybackState();
     const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
 
-    if (item) {
-      if (item.id !== currentSong) {
+    if (item && item.id !== currentSong) {
         currentSong = item.id;
         console.log(`Now playing: ${item.name}`);
-        const playingMessage = new Message(
+      oscClient.send(
+        new Message(
           "/chatbox/input",
           `Playing ${item.name} by ${item.artists[0].name}`,
           true,
           false
+        )
         );
-
-        oscClient.send(playingMessage);
-      }
     }
   }, 1000);
+};
+
+const refreshToken = async () => {
+  const data = await spotifyApi.refreshAccessToken();
+  const { access_token } = data.body;
+
+  spotifyApi.setAccessToken(access_token);
+  console.log(`Access token refreshed!`);
 };
 
 export { setupApp };
