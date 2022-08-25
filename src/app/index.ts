@@ -5,18 +5,18 @@ import nodePersist from "node-persist";
 import { Server } from "http";
 import dotenv from "dotenv";
 
-const spotifyApi = new SpotifyWebApi({
-  redirectUri: "http://localhost:8888/callback",
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-});
-
+let spotifyApi: SpotifyWebApi;
 let server: Server | undefined;
 const oscClient = new Client("localhost", 9000);
 let currentSong: string;
 
 const setupApp = async () => {
   dotenv.config();
+  spotifyApi = new SpotifyWebApi({
+    redirectUri: "http://localhost:8888/callback",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+  });
   process.on("SIGTERM", () => {
     if (server) server.close();
     oscClient.close();
