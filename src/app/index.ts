@@ -81,30 +81,38 @@ const startListening = async (
   setInterval(async () => await refreshToken(), (expires_in / 2) * 1000);
 
   setInterval(async () => {
-    const playback = await spotifyApi.getMyCurrentPlaybackState();
-    const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
+    try {
+      const playback = await spotifyApi.getMyCurrentPlaybackState();
+      const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
 
-    if (item && item.id !== currentSong) {
-      currentSong = item.id;
-      console.log(`Now playing: ${item.name}`);
-      oscClient.send(
-        new Message(
-          "/chatbox/input",
-          `Listening to ${item.name} by ${item.artists[0].name}`,
-          true,
-          false
-        )
-      );
+      if (item && item.id !== currentSong) {
+        currentSong = item.id;
+        console.log(`Now playing: ${item.name}`);
+        oscClient.send(
+          new Message(
+            "/chatbox/input",
+            `Listening to ${item.name} by ${item.artists[0].name}`,
+            true,
+            false
+          )
+        );
+      }
+    } catch (err) {
+      console.log(`Failed fetching song. ${err}`);
     }
   }, 1000);
 };
 
 const refreshToken = async () => {
-  const data = await spotifyApi.refreshAccessToken();
-  const { access_token } = data.body;
+  try {
+    const data = await spotifyApi.refreshAccessToken();
+    const { access_token } = data.body;
 
-  spotifyApi.setAccessToken(access_token);
-  console.log(`Access token refreshed!`);
+    spotifyApi.setAccessToken(access_token);
+    console.log(`Access token refreshed!`);
+  } catch (err) {
+    console.log(`Failed refreshing token. ${err}`);
+  }
 };
 
 export { setupApp };
