@@ -5,8 +5,8 @@
 - [vrc-osc-spotify](#vrc-osc-spotify)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-    - [Using Docker (Recommended)](#using-docker-recommended)
-    - [Using Yarn](#using-yarn)
+    - [Using Yarn (Recommended)](#using-yarn-recommended)
+    - [Using Docker](#using-docker)
   - [Setup](#setup)
   - [Update](#update)
   - [Screenshots](#screenshots)
@@ -33,16 +33,7 @@ In order to do this, I've created a step-by-step tutorial below.
 
 For both methods you'll need to have [Git](https://git-scm.com/), a version control system, installed.
 
-### Using Docker (Recommended)
-
-You'll need to have [Docker](https://www.docker.com/) installed on your machine, alongside with [Docker Compose](https://docs.docker.com/compose/) (usually included in the Docker install) version 3 or above.
-
-1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
-2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
-3. Copy `.env.example` to `.env` and fill in the 'Client ID' and 'Client Secret' you obtained above.
-4. Simply write `docker compose up` and the project will start building itself. After building, the app should automatically start.
-
-### Using Yarn
+### Using Yarn (Recommended)
 
 You'll need to have [Node JS](https://nodejs.org/en/) version 16 or above and a functioning [Yarn](https://yarnpkg.com/) install.
 
@@ -51,6 +42,17 @@ You'll need to have [Node JS](https://nodejs.org/en/) version 16 or above and a 
 3. Install the dependencies using `yarn install`.
 4. Copy `.env.example` to `.env` and fill in the 'Client ID' and 'Client Secret' you obtained above.
 5. Run the application using `yarn dev` (or build using `yarn build`).
+
+### Using Docker
+
+You'll need to have [Docker](https://www.docker.com/) installed on your machine, alongside with [Docker Compose](https://docs.docker.com/compose/) (usually included in the Docker install) version 3 or above.
+
+**Note that this option does __not__ work with Windows as Docker Desktop doesn't support host network sharing.**
+
+1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
+2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
+3. Copy `.env.example` to `.env` and fill in the 'Client ID' and 'Client Secret' you obtained above.
+4. Simply write `docker compose up` and the project will start building itself. After building, the app should automatically start.
 
 ## Setup
 
