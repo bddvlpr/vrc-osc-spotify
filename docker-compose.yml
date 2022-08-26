@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  bad-vrc-osc:
+  vrc-osc-spotify:
     build: .
     env_file: .env
     volumes:

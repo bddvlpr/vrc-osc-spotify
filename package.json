@@ -1,9 +1,9 @@
 {
-  "name": "bad-vrc-osc",
+  "name": "vrc-osc-spotify",
   "version": "0.0.1",
   "description": "Small Spotify integration into VRChat's chatbox OSC.",
   "main": "src/index.ts",
-  "repository": "https://github.com/bddvlpr/bad-vrc-osc",
+  "repository": "https://github.com/bddvlpr/vrc-osc-spotify",
   "author": "Luna Simons <luna@bddvlpr.com>",
   "license": "BSD-3-Clause",
   "private": true,

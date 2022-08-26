@@ -1,8 +1,8 @@
-# bad-vrc-osc
+# vrc-osc-spotify
 
 💬 Small Spotify integration into VRChat's chatbox OSC. Works on Linux and Windows!
 
-- [bad-vrc-osc](#bad-vrc-osc)
+- [vrc-osc-spotify](#vrc-osc-spotify)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
     - [Using Docker (Recommended)](#using-docker-recommended)
@@ -32,8 +32,8 @@ For both methods you'll need to have [Git](https://git-scm.com/), a version cont
 
 You'll need to have [Docker](https://www.docker.com/) installed on your machine, alongside with [Docker Compose](https://docs.docker.com/compose/) (usually included in the Docker install) version 3 or above.
 
-1. Clone the project using `git clone https://github.com/bddvlpr/bad-vrc-osc.git` to a directory on your local machine.
-2. Enter the directory you've just cloned using `cd bad-vrc-osc`.
+1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
+2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
 3. Copy `.env.example` to `.env` and fill in the 'Client ID' and 'Client Secret' you obtained above.
 4. Simply write `docker compose up` and the project will start building itself. After building, the app should automatically start.
 
@@ -41,8 +41,8 @@ You'll need to have [Docker](https://www.docker.com/) installed on your machine,
 
 You'll need to have [Node JS](https://nodejs.org/en/) version 16 or above and a functioning [Yarn](https://yarnpkg.com/) install.
 
-1. Clone the project using `git clone https://github.com/bddvlpr/bad-vrc-osc.git` to a directory on your local machine.
-2. Enter the directory you've just cloned using `cd bad-vrc-osc`.
+1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
+2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
 3. Install the dependencies using `yarn install`.
 4. Run the application using `CLIENT_ID=x CLIENT_SECRET=x yarn dev` (or build using `yarn build`).
 
@@ -55,7 +55,7 @@ That's it! Make sure you have OSC enabled and have chatboxes shown.
 
 ## Update
 
-If you want to update the project, simply make sure you're navigated into the right directory (`cd bad-vrc-osc`) and enter `git pull`.
+If you want to update the project, simply make sure you're navigated into the right directory (`cd vrc-osc-spotify`) and enter `git pull`.
 
 ## Screenshots
 

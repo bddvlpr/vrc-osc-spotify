@@ -15,6 +15,6 @@ WORKDIR /app
 COPY --from=build-env /app/dist/ .
 COPY --from=build-env /app/node_modules ./node_modules
 
-LABEL org.opencontainers.image.source https://github.com/bddvlpr/bad-vrc-osc
+LABEL org.opencontainers.image.source https://github.com/bddvlpr/vrc-osc-spotify
 EXPOSE 8888
 CMD ["node", "index.js"]
