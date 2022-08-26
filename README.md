@@ -49,7 +49,8 @@ You'll need to have [Node JS](https://nodejs.org/en/) version 16 or above and a 
 1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
 2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
 3. Install the dependencies using `yarn install`.
-4. Run the application using `CLIENT_ID=x CLIENT_SECRET=x yarn dev` (or build using `yarn build`).
+4. Copy `.env.example` to `.env` and fill in the 'Client ID' and 'Client Secret' you obtained above.
+5. Run the application using `yarn dev` (or build using `yarn build`).
 
 ## Setup
 
