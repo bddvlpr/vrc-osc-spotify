@@ -5,14 +5,12 @@ import nodePersist from "node-persist";
 import { Server } from "http";
 import dotenv from "dotenv";
 
-let spotifyApi: SpotifyWebApi;
 let server: Server | undefined;
 const oscClient = new Client("localhost", 9000);
-let currentSong: string;
 
 const setupApp = async () => {
   dotenv.config();
-  spotifyApi = new SpotifyWebApi({
+  const spotifyApi = new SpotifyWebApi({
     redirectUri: "http://localhost:8888/callback",
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -30,7 +28,7 @@ const setupApp = async () => {
     (await storage.getItem("tokens")) || {};
 
   if (access_token && refresh_token) {
-    startListening(access_token, refresh_token);
+    startListening(spotifyApi, access_token, refresh_token);
     return;
   }
   const app = express();
@@ -60,7 +58,7 @@ const setupApp = async () => {
 
     storage.setItem("tokens", { access_token, refresh_token });
 
-    startListening(access_token, refresh_token, expires_in);
+    startListening(spotifyApi, access_token, refresh_token, expires_in);
   });
 
   server = app.listen(8888, () => {
@@ -69,6 +67,7 @@ const setupApp = async () => {
 };
 
 const startListening = async (
+  spotifyApi: SpotifyWebApi,
   access_token: string,
   refresh_token: string,
   expires_in = 3600
@@ -76,10 +75,11 @@ const startListening = async (
   spotifyApi.setAccessToken(access_token);
   spotifyApi.setRefreshToken(refresh_token);
 
-  await refreshToken();
+  await refreshToken(spotifyApi);
 
-  setInterval(async () => await refreshToken(), (expires_in / 2) * 1000);
+  setInterval(async () => await refreshToken(spotifyApi), (expires_in / 2) * 1000);
 
+  let currentSong: string;
   setInterval(async () => {
     try {
       const playback = await spotifyApi.getMyCurrentPlaybackState();
@@ -103,7 +103,7 @@ const startListening = async (
   }, 1000);
 };
 
-const refreshToken = async () => {
+const refreshToken = async (spotifyApi: SpotifyWebApi) => {
   try {
     const data = await spotifyApi.refreshAccessToken();
     const { access_token } = data.body;
