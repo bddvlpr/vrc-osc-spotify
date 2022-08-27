@@ -4,6 +4,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import nodePersist from "node-persist";
 import { Server } from "http";
 import dotenv from "dotenv";
+import { queueLyrics } from "./mxm";
 
 let server: Server | undefined;
 const oscClient = new Client("localhost", 9000);
@@ -77,15 +78,27 @@ const startListening = async (
 
   await refreshToken(spotifyApi);
 
-  setInterval(async () => await refreshToken(spotifyApi), (expires_in / 2) * 1000);
+  setInterval(
+    async () => await refreshToken(spotifyApi),
+    (expires_in / 2) * 1000
+  );
 
   let currentSong: string;
+  let currentLyrics: NodeJS.Timeout[] = [];
   setInterval(async () => {
     try {
       const playback = await spotifyApi.getMyCurrentPlaybackState();
       const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
 
       if (item && item.id !== currentSong) {
+        if (process.env.MXM_ENABLED === "true" && playback.body.progress_ms) {
+          currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
+          currentLyrics = await queueLyrics(
+            playback.body.progress_ms,
+            item,
+            oscClient
+          );
+        }
         currentSong = item.id;
         console.log(`Now playing: ${item.name}`);
         oscClient.send(
