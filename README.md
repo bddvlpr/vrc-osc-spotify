@@ -22,11 +22,11 @@ In order to do this, I've created a step-by-step tutorial below.
 ![Create](https://i.imgur.com/QZRoDqH.png)
 
 3. Once you've created an app, click on it to go to its overview. On this page you'll need to get the two parameters called 'Client ID' and 'Client Secret'. **Never share the Client Secret with anyone besides yourself.**
-   
+
 ![Client](https://i.imgur.com/t9aKZmy.png)
 
 4. Go to 'Edit Settings', scroll down to 'Redirect URIs' and add `http://localhost:8888/callback`. Press save at the bottom and you're good to go.
-   
+
 ![Callback Tab](https://i.imgur.com/wHd2eGY.png)
 
 ## Installation
