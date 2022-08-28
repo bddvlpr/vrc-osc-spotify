@@ -9,6 +9,7 @@
     - [Using Docker](#using-docker)
   - [Setup](#setup)
   - [Update](#update)
+  - [Lyrics](#lyrics)
   - [Screenshots](#screenshots)
 
 ## Prerequisites
@@ -64,6 +65,11 @@ That's it! Make sure you have OSC enabled and have chatboxes shown.
 ## Update
 
 If you want to update the project, simply make sure you're navigated into the right directory (`cd vrc-osc-spotify`) and enter `git pull`.
+
+## Lyrics
+
+Currently (experimentally) fetches lyrics using [musixmatch.com](https://musixmatch.com/)'s internal API and uses them to schedule each lyric in-sync with the song.
+This feature is currently in development and I will **not** provide support on retrieving an internal API. (See .env.example on how to setup)
 
 ## Screenshots
 
