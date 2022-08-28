@@ -83,21 +83,28 @@ const startListening = async (
     (expires_in / 2) * 1000
   );
 
-  let currentSong: string;
+  let currentSong: string | undefined;
   let currentLyrics: NodeJS.Timeout[] = [];
   setInterval(async () => {
     try {
       const playback = await spotifyApi.getMyCurrentPlaybackState();
-      const { item } = playback.body as { item: SpotifyApi.TrackObjectFull };
+      const { item, is_playing, progress_ms } = playback.body as {
+        item: SpotifyApi.TrackObjectFull;
+        is_playing: boolean;
+        progress_ms: number;
+      };
+
+      if (!is_playing) {
+        currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
+        currentLyrics = [];
+        currentSong = undefined;
+        return;
+      }
 
       if (item && item.id !== currentSong) {
-        if (process.env.MXM_ENABLED === "true" && playback.body.progress_ms) {
+        if (process.env.MXM_ENABLED === "true" && progress_ms) {
           currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
-          currentLyrics = await queueLyrics(
-            playback.body.progress_ms,
-            item,
-            oscClient
-          );
+          currentLyrics = await queueLyrics(progress_ms, item, oscClient);
         }
         currentSong = item.id;
         console.log(`Now playing: ${item.name}`);
