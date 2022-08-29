@@ -1,5 +1,7 @@
 # vrc-osc-spotify
 
+[![Yarn CI](https://github.com/bddvlpr/vrc-osc-spotify/actions/workflows/node-ci.yml/badge.svg)](https://github.com/bddvlpr/vrc-osc-spotify/actions/workflows/node-ci.yml)
+
 💬 Small Spotify integration into VRChat's chatbox OSC. Works on Linux and Windows!
 
 - [vrc-osc-spotify](#vrc-osc-spotify)
