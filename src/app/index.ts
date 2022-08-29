@@ -47,12 +47,9 @@ const setupApp = async () => {
       res.send(`Error: ${error}`);
     }
 
-    const authorizationRequest = await spotifyApi.authorizationCodeGrant(
-      code as string
-    );
-
-    const { access_token, refresh_token, expires_in } =
-      authorizationRequest.body;
+    const { access_token, refresh_token, expires_in } = (
+      await spotifyApi.authorizationCodeGrant(code as string)
+    ).body;
 
     console.log(`Tokens received. Expires in ${expires_in} seconds.`);
     res.send("OK!");
@@ -87,8 +84,9 @@ const startListening = async (
   let currentLyrics: NodeJS.Timeout[] = [];
   setInterval(async () => {
     try {
-      const playback = await spotifyApi.getMyCurrentPlaybackState();
-      const { item, is_playing, progress_ms } = playback.body as {
+      const { item, is_playing, progress_ms } = (
+        await spotifyApi.getMyCurrentPlaybackState()
+      ).body as {
         item: SpotifyApi.TrackObjectFull;
         is_playing: boolean;
         progress_ms: number;
@@ -125,11 +123,11 @@ const startListening = async (
 
 const refreshToken = async (spotifyApi: SpotifyWebApi) => {
   try {
-    const data = await spotifyApi.refreshAccessToken();
-    const { access_token } = data.body;
+    const { access_token, expires_in } = (await spotifyApi.refreshAccessToken())
+      .body;
 
     spotifyApi.setAccessToken(access_token);
-    console.log(`Access token refreshed!`);
+    console.log(`Access token refreshed! Expires in ${expires_in} seconds.`);
   } catch (err) {
     console.log(`Failed refreshing token. ${err}`);
   }
