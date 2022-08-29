@@ -1,0 +1,12 @@
+name: Yarn CI
+on: [push]
+jobs:
+  build:
+    name: Install, lint and format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn build
