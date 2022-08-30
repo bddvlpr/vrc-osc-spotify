@@ -7,7 +7,10 @@ import dotenv from "dotenv";
 import { queueLyrics } from "./mxm";
 
 let server: Server | undefined;
-const oscClient = new Client("localhost", 9000);
+const oscClient = new Client(
+  process.env.OSC_TARGET_ADDRESS || "localhost",
+  Number(process.env.OSC_TARGET_PORT) || 9000
+);
 
 const setupApp = async () => {
   dotenv.config();
