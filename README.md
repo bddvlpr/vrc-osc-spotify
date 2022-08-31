@@ -59,7 +59,7 @@ You'll need to have [Docker](https://www.docker.com/) installed on your machine,
 
 ## Setup
 
-Once you've got the app running, navigate to [localhost:8888/callback](http://localhost:8888/callback) and log in using the account you'll be using for your status.
+Once you've got the app running, navigate to [localhost:8888/login](http://localhost:8888/login) and log in using the account you'll be using for your status.
 After this, it should save your access token and refresh token in `data/` and will (probably) never ask you to log in again.
 
 That's it! Make sure you have OSC enabled and have chatboxes shown.
