@@ -67,6 +67,7 @@ That's it! Make sure you have OSC enabled and have chatboxes shown.
 ## Update
 
 If you want to update the project, simply make sure you're navigated into the right directory (`cd vrc-osc-spotify`) and enter `git pull`.
+Make sure all packages are updated / installed by entering `yarn install` after.
 
 ## Lyrics
 
