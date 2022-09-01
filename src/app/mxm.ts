@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Client, Message } from "node-osc";
+import { storage } from ".";
 
 interface Subtitle {
   text: string;
@@ -11,7 +12,7 @@ interface Subtitle {
   };
 }
 
-const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
+const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   const response = await axios.get(
     "https://apic-desktop.musixmatch.com/ws/1.1/macro.subtitles.get",
     {
@@ -83,4 +84,22 @@ const queueLyrics = async (
   return queuedLyrics;
 };
 
-export { getLyrics, queueLyrics };
+const saveLyrics = async (
+  song: SpotifyApi.TrackObjectFull,
+  subtitles: Subtitle[]
+) => {
+  await storage.setItem(song.id, subtitles);
+};
+
+const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
+  let retrievedLyrics = (await storage.getItem(song.id)) as Subtitle[];
+
+  if (!retrievedLyrics) {
+    console.log(`No local lyrics found for ${song.name}. Pulling from mxm...`);
+    retrievedLyrics = (await pullLyrics(song)) || [];
+    await saveLyrics(song, retrievedLyrics);
+  }
+  return retrievedLyrics;
+};
+
+export { queueLyrics };

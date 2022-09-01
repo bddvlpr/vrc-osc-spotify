@@ -11,6 +11,7 @@ const oscClient = new Client(
   process.env.OSC_TARGET_ADDRESS || "localhost",
   Number(process.env.OSC_TARGET_PORT) || 9000
 );
+const storage = nodePersist.create();
 
 const setupApp = async () => {
   dotenv.config();
@@ -25,7 +26,6 @@ const setupApp = async () => {
     process.exit(0);
   });
 
-  const storage = nodePersist.create();
   await storage.init({ dir: "data" });
 
   const { access_token, refresh_token } =
@@ -136,4 +136,4 @@ const refreshToken = async (spotifyApi: SpotifyWebApi) => {
   }
 };
 
-export { setupApp };
+export { setupApp, storage };
