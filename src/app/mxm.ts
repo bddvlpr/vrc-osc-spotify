@@ -88,6 +88,7 @@ const saveLyrics = async (
   song: SpotifyApi.TrackObjectFull,
   subtitles: Subtitle[]
 ) => {
+  if (!subtitles || subtitles.length <= 0) return;
   await storage.setItem(song.id, subtitles);
 };
 
@@ -99,6 +100,7 @@ const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
     retrievedLyrics = (await pullLyrics(song)) || [];
     await saveLyrics(song, retrievedLyrics);
   }
+  console.log(`Retrieved ${retrievedLyrics.length} lyrics from cache.`);
   return retrievedLyrics;
 };
 
