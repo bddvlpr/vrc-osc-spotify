@@ -5,6 +5,7 @@ node_modules
 /data
 /ssl
 /package
+/coverage
 .env
 .env.*
 !.env.example

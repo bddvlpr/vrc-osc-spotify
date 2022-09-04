@@ -4,6 +4,7 @@ node_modules
 /dist
 /ssl
 /package
+/coverage
 /data
 .env
 .env.*

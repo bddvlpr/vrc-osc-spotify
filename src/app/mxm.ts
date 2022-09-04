@@ -104,4 +104,4 @@ const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   return retrievedLyrics;
 };
 
-export { queueLyrics };
+export { pullLyrics, queueLyrics, saveLyrics, getLyrics };

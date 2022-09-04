@@ -1,9 +1,9 @@
-import express from "express";
-import { Client, Message } from "node-osc";
-import SpotifyWebApi from "spotify-web-api-node";
-import nodePersist from "node-persist";
 import { Server } from "http";
 import dotenv from "dotenv";
+import express from "express";
+import { Client, Message } from "node-osc";
+import { create as createStorage } from "node-persist";
+import SpotifyWebApi from "spotify-web-api-node";
 import { queueLyrics } from "./mxm";
 
 let server: Server | undefined;
@@ -11,7 +11,7 @@ const oscClient = new Client(
   process.env.OSC_TARGET_ADDRESS || "localhost",
   Number(process.env.OSC_TARGET_PORT) || 9000
 );
-const storage = nodePersist.create();
+const storage = createStorage();
 
 const setupApp = async () => {
   dotenv.config();
