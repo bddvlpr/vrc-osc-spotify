@@ -50,7 +50,7 @@ You'll need to have [Node JS](https://nodejs.org/en/) version 16 or above and a 
 
 You'll need to have [Docker](https://www.docker.com/) installed on your machine, alongside with [Docker Compose](https://docs.docker.com/compose/) (usually included in the Docker install) version 3 or above.
 
-**Note that this option does _not_ work with Windows as Docker Desktop doesn't support host network sharing.**
+**Note that this option will only work on Linux hosts as Docker Desktop does not support host network sharing.**
 
 1. Clone the project using `git clone https://github.com/bddvlpr/vrc-osc-spotify.git` to a directory on your local machine.
 2. Enter the directory you've just cloned using `cd vrc-osc-spotify`.
