@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Client, Message } from "node-osc";
+import { loadSubtitles, saveSubtitles } from "./cache";
 import { storage } from ".";
 
 interface Subtitle {
@@ -75,6 +76,7 @@ const queueLyrics = async (
 
     queuedLyrics.push(
       setTimeout(() => {
+        console.log(`>> ${lyric.text}`);
         oscClient.send(new Message("/chatbox/input", lyric.text, true, false));
       }, lyricTime - playbackProgress)
     );
@@ -84,24 +86,16 @@ const queueLyrics = async (
   return queuedLyrics;
 };
 
-const saveLyrics = async (
-  song: SpotifyApi.TrackObjectFull,
-  subtitles: Subtitle[]
-) => {
-  if (!subtitles || subtitles.length <= 0) return;
-  await storage.setItem(song.id, subtitles);
-};
-
 const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
-  let retrievedLyrics = (await storage.getItem(song.id)) as Subtitle[];
+  let retrievedLyrics = await loadSubtitles(song);
 
   if (!retrievedLyrics) {
     console.log(`No local lyrics found for ${song.name}. Pulling from mxm...`);
     retrievedLyrics = (await pullLyrics(song)) || [];
-    await saveLyrics(song, retrievedLyrics);
+    await saveSubtitles(song, retrievedLyrics);
   }
   console.log(`Retrieved ${retrievedLyrics.length} lyrics from cache.`);
   return retrievedLyrics;
 };
 
-export { pullLyrics, queueLyrics, saveLyrics, getLyrics };
+export { pullLyrics, queueLyrics, getLyrics, Subtitle };
