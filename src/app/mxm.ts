@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Client, Message } from "node-osc";
 import { loadSubtitles, saveSubtitles } from "./cache";
-import { storage } from ".";
+import { log } from "./logger";
 
 interface Subtitle {
   text: string;
@@ -41,6 +41,14 @@ const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
       },
     }
   );
+
+  const { status_code, hint } = response.data.message.header;
+
+  if (status_code !== 200) {
+    log(`Error: Could not retrieve lyrics: ${status_code} ${hint}`);
+    return undefined;
+  }
+
   const { macro_calls } = response.data.message.body;
   const userBlobResponse =
     macro_calls["userblob.get"].message.header.status_code;
@@ -76,13 +84,14 @@ const queueLyrics = async (
 
     queuedLyrics.push(
       setTimeout(() => {
-        console.log(`>> ${lyric.text}`);
+        log(`>> ${lyric.text}`, false);
+        //console.log(`>> ${lyric.text}`);
         oscClient.send(new Message("/chatbox/input", lyric.text, true, false));
       }, lyricTime - playbackProgress)
     );
   });
 
-  console.log(`Queued ${retrievedLyrics.length} lyrics.`);
+  log(`Queued ${retrievedLyrics.length} lyrics.`);
   return queuedLyrics;
 };
 
@@ -90,11 +99,10 @@ const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   let retrievedLyrics = await loadSubtitles(song);
 
   if (!retrievedLyrics) {
-    console.log(`No local lyrics found for ${song.name}. Pulling from mxm...`);
+    log(`No local lyrics found for ${song.name}. Pulling from mxm...`);
     retrievedLyrics = (await pullLyrics(song)) || [];
     await saveSubtitles(song, retrievedLyrics);
   }
-  console.log(`Retrieved ${retrievedLyrics.length} lyrics from cache.`);
   return retrievedLyrics;
 };
 

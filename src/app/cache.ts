@@ -1,3 +1,4 @@
+import { log } from "./logger";
 import { Subtitle } from "./mxm";
 import { storage } from ".";
 
@@ -11,7 +12,7 @@ const loadSubtitles = async (song: SpotifyApi.TrackObjectFull) => {
   if (!cached) return undefined;
   const { subtitles, expires } = cached as SubtitleCache;
   if (expires < Date.now()) return undefined;
-  console.log(
+  log(
     `Cached subtitles expire in ${((expires - Date.now()) / 60000).toFixed(
       2
     )} minutes.`
@@ -25,7 +26,7 @@ const saveSubtitles = async (
 ) => {
   if (subtitles.length === 0) return;
   const expires = Date.now() + 1000 * 60 * 60 * 24 * 7;
-  await storage.setItem(song.id, { cached: subtitles, expires });
+  await storage.setItem(song.id, { subtitles, expires });
 };
 
 export { loadSubtitles, saveSubtitles };

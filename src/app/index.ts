@@ -1,9 +1,11 @@
 import { Server } from "http";
+import os from "os";
 import dotenv from "dotenv";
 import express from "express";
 import { Client, Message } from "node-osc";
 import { create as createStorage } from "node-persist";
 import SpotifyWebApi from "spotify-web-api-node";
+import { log } from "./logger";
 import { queueLyrics } from "./mxm";
 
 let server: Server | undefined;
@@ -54,7 +56,7 @@ const setupApp = async () => {
       await spotifyApi.authorizationCodeGrant(code as string)
     ).body;
 
-    console.log(`Tokens received. Expires in ${expires_in} seconds.`);
+    log(`Tokens received. Expires in ${expires_in} seconds.`);
     res.send("OK!");
 
     storage.setItem("tokens", { access_token, refresh_token });
@@ -63,7 +65,7 @@ const setupApp = async () => {
   });
 
   server = app.listen(8888, () => {
-    console.log(`Listening on http://localhost:8888/login for login.`);
+    log(`Listening on http://localhost:8888/login for login.`);
   });
 };
 
@@ -103,12 +105,12 @@ const startListening = async (
       }
 
       if (item && item.id !== currentSong) {
+        log(`${os.EOL}Now playing: ${item.name}`);
         if (process.env.MXM_ENABLED === "true" && progress_ms) {
           currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
           currentLyrics = await queueLyrics(progress_ms, item, oscClient);
         }
         currentSong = item.id;
-        console.log(`Now playing: ${item.name}`);
         oscClient.send(
           new Message(
             "/chatbox/input",
@@ -119,7 +121,7 @@ const startListening = async (
         );
       }
     } catch (err) {
-      console.log(`Failed fetching song. ${err}`);
+      log(`Failed fetching song. ${err}`);
     }
   }, 1000);
 };
@@ -130,9 +132,9 @@ const refreshToken = async (spotifyApi: SpotifyWebApi) => {
       .body;
 
     spotifyApi.setAccessToken(access_token);
-    console.log(`Access token refreshed! Expires in ${expires_in} seconds.`);
+    log(`Access token refreshed! Expires in ${expires_in} seconds.`);
   } catch (err) {
-    console.log(`Failed refreshing token. ${err}`);
+    log(`Failed refreshing token. ${err}`);
   }
 };
 
