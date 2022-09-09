@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Client, Message } from "node-osc";
 import { loadSubtitles, saveSubtitles } from "./cache";
+import config from "./config";
 import { log } from "./logger";
 
 interface Subtitle {
@@ -31,13 +32,13 @@ const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
         track_spotify_id: song.uri,
         f_subtitle_length_max_deviation: "1",
         subtitle_format: "mxm",
-        usertoken: process.env.MXM_USER_TOKEN,
-        signature: process.env.MXM_SIGNATURE,
+        usertoken: config.MXM_USER_TOKEN,
+        signature: config.MXM_SIGNATURE,
         signature_protocol: "sha1",
         app_id: "web-desktop-app-v1.0",
       },
       headers: {
-        Cookie: process.env.MXM_COOKIE || "",
+        Cookie: config.MXM_COOKIE || "",
       },
     }
   );

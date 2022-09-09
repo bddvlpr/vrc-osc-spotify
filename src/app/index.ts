@@ -1,26 +1,22 @@
 import { Server } from "http";
 import os from "os";
-import dotenv from "dotenv";
 import express from "express";
 import { Client, Message } from "node-osc";
 import { create as createStorage } from "node-persist";
 import SpotifyWebApi from "spotify-web-api-node";
+import config from "./config";
 import { log } from "./logger";
 import { queueLyrics } from "./mxm";
 
 let server: Server | undefined;
-const oscClient = new Client(
-  process.env.OSC_TARGET_ADDRESS || "localhost",
-  Number(process.env.OSC_TARGET_PORT) || 9000
-);
+const oscClient = new Client(config.OSC_TARGET_ADDRESS, config.OSC_TARGET_PORT);
 const storage = createStorage();
 
 const setupApp = async () => {
-  dotenv.config();
   const spotifyApi = new SpotifyWebApi({
     redirectUri: "http://localhost:8888/callback",
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientId: config.CLIENT_ID,
+    clientSecret: config.CLIENT_SECRET,
   });
   process.on("SIGTERM", () => {
     if (server) server.close();
@@ -106,7 +102,12 @@ const startListening = async (
 
       if (item && item.id !== currentSong) {
         log(`${os.EOL}Now playing: ${item.name}`);
-        if (process.env.MXM_ENABLED === "true" && progress_ms) {
+        if (
+          config.MXM_USER_TOKEN &&
+          config.MXM_SIGNATURE &&
+          config.MXM_COOKIE &&
+          progress_ms
+        ) {
           currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
           currentLyrics = await queueLyrics(progress_ms, item, oscClient);
         }
