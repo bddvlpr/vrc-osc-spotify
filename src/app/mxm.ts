@@ -46,7 +46,13 @@ const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   const { status_code, hint } = response.data.message.header;
 
   if (status_code !== 200) {
-    log(`Error: Could not retrieve lyrics: ${status_code} ${hint}`);
+    log(
+      `Error: Could not retrieve lyrics: ${status_code} ${
+        hint.includes("captcha")
+          ? "Captcha requested. Make sure you're using a token that isn't duplicated or spamming the endpoint."
+          : hint
+      }.`
+    );
     return undefined;
   }
 
