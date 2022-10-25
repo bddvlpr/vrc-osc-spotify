@@ -5,7 +5,7 @@
 💬 Small Spotify integration into VRChat's chatbox OSC. Works on Linux and Windows!
 
 > **Warning**  
-> This project will soon be merged with [bddvlpr/vrc-osc-speech](https://github.com/bddvlpr/vrc-osc-speech) to have an actual ui and more features.  
+> This project will soon be integrated in a (currently work-in-progress) project to provide an actual ui and more features.  
 > Development will be halted and focused on the new project.
 
 - [vrc-osc-spotify](#vrc-osc-spotify)
