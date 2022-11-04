@@ -12,7 +12,6 @@ const loadSubtitles = async (song: SpotifyApi.TrackObjectFull) => {
   const cached = await storage.getItem(song.id);
   if (!cached) return undefined;
   const { subtitles, expires } = cached as SubtitleCache;
-  console.log(config.CACHE_DELETION);
   if (config.CACHE_DELETION && expires < Date.now()) return undefined;
   log(
     `Cached subtitles expire in ${((expires - Date.now()) / 60000).toFixed(
