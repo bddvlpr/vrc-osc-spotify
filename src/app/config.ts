@@ -13,6 +13,17 @@ const setupConfiguration = () => {
 
     OSC_TARGET_ADDRESS: z.string().optional().default("localhost"),
     OSC_TARGET_PORT: z.number().optional().default(9000),
+
+    CACHE_DELETION: z
+      .string()
+      .optional()
+      .default("true")
+      .transform((s) => s === "true"),
+    CACHE_EXPIRATION: z
+      .string()
+      .optional()
+      .default("604800000")
+      .transform((s) => parseInt(s, 10)),
   });
 
   return envSchema.parse(process.env);
