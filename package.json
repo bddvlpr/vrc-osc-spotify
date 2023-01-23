@@ -11,8 +11,8 @@
     "build": "tsc",
     "dev": "nodemon src/index.ts",
     "commit": "cz",
-    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
-    "format": "prettier --write --plugin-search-dir=. . && eslint . --fix"
+    "lint": "prettier --end-of-line=lf --check --plugin-search-dir=. . && eslint .",
+    "format": "prettier --end-of-line=lf --write --plugin-search-dir=. . && eslint . --fix"
   },
   "config": {
     "commitizen": {
