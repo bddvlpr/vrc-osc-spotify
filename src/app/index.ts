@@ -97,7 +97,7 @@ const startListening = async (
         if (config.LISTENING_SONG_PARAMETER && currentSong) {
           oscClient.send(
             new Message(
-              `/avatar/parameter/${config.LISTENING_SONG_PARAMETER}`,
+              `/avatar/parameters/${config.LISTENING_SONG_PARAMETER}`,
               false
             )
           );
@@ -115,7 +115,7 @@ const startListening = async (
         if (config.LISTENING_SONG_PARAMETER) {
           oscClient.send(
             new Message(
-              `/avatar/parameter/${config.LISTENING_SONG_PARAMETER}`,
+              `/avatar/parameters/${config.LISTENING_SONG_PARAMETER}`,
               true
             )
           );
