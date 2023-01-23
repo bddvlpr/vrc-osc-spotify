@@ -93,7 +93,14 @@ const queueLyrics = async (
       setTimeout(() => {
         log(`>> ${lyric.text}`, false);
         //console.log(`>> ${lyric.text}`);
-        oscClient.send(new Message("/chatbox/input", lyric.text, true, false));
+        oscClient.send(
+          new Message(
+            "/chatbox/input",
+            lyric.text ? `(♪) ${lyric.text}` : "",
+            true,
+            false
+          )
+        );
       }, lyricTime - playbackProgress)
     );
   });

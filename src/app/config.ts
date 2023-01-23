@@ -24,6 +24,8 @@ const setupConfiguration = () => {
       .optional()
       .default("604800000")
       .transform((s) => parseInt(s, 10)),
+
+    LISTENING_SONG_PARAMETER: z.string().optional(),
   });
 
   return envSchema.parse(process.env);

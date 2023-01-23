@@ -94,6 +94,15 @@ const startListening = async (
       };
 
       if (!is_playing) {
+        if (config.LISTENING_SONG_PARAMETER && currentSong) {
+          oscClient.send(
+            new Message(
+              `/avatar/parameter/${config.LISTENING_SONG_PARAMETER}`,
+              false
+            )
+          );
+        }
+
         currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
         currentLyrics = [];
         currentSong = undefined;
@@ -102,6 +111,16 @@ const startListening = async (
 
       if (item && item.id !== currentSong) {
         log(`${os.EOL}Now playing: ${item.name}`);
+
+        if (config.LISTENING_SONG_PARAMETER) {
+          oscClient.send(
+            new Message(
+              `/avatar/parameter/${config.LISTENING_SONG_PARAMETER}`,
+              true
+            )
+          );
+        }
+
         if (
           config.MXM_USER_TOKEN &&
           config.MXM_SIGNATURE &&
@@ -115,7 +134,7 @@ const startListening = async (
         oscClient.send(
           new Message(
             "/chatbox/input",
-            `Listening to ${item.name} by ${item.artists[0].name}`,
+            `(🎵) ${item.name} by ${item.artists[0].name}`,
             true,
             false
           )
