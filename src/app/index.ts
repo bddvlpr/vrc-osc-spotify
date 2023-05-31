@@ -6,7 +6,8 @@ import { create as createStorage } from "node-persist";
 import SpotifyWebApi from "spotify-web-api-node";
 import config from "./config";
 import { log } from "./logger";
-import { queueLyrics } from "./mxm";
+import { queueLyrix } from "./lyrics/lyrix";
+import { queueLyrics } from "./lyrics/mxm";
 
 let server: Server | undefined;
 const oscClient = new Client(config.OSC_TARGET_ADDRESS, config.OSC_TARGET_PORT);
@@ -129,6 +130,9 @@ const startListening = async (
         ) {
           currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
           currentLyrics = await queueLyrics(progress_ms, item, oscClient);
+        } else if (config.LYRIX_SERVER && progress_ms) {
+          currentLyrics.forEach((lyricTimer) => clearTimeout(lyricTimer));
+          currentLyrics = await queueLyrix(progress_ms, item, oscClient);
         }
         currentSong = item.id;
         oscClient.send(

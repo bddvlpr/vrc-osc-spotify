@@ -1,6 +1,6 @@
 import config from "./config";
 import { log } from "./logger";
-import { Subtitle } from "./mxm";
+import { Subtitle } from "./lyrics/types";
 import { storage } from ".";
 
 interface SubtitleCache {
