@@ -21,13 +21,15 @@ const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
 
   if (!lines) return undefined;
 
-  return lines.map((line) => (
-   {
-    text: line.words,
-    time: {
-      total: +line.startTimeMs / 1000,
-    }
-  } as Subtitle));
+  return lines.map(
+    (line) =>
+      ({
+        text: line.words,
+        time: {
+          total: +line.startTimeMs / 1000,
+        },
+      } as Subtitle)
+  );
 };
 
 const queueLyrix = async (
