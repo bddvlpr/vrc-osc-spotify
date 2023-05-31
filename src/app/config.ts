@@ -11,6 +11,8 @@ const setupConfiguration = () => {
     MXM_SIGNATURE: z.string().optional(),
     MXM_COOKIE: z.string().optional(),
 
+    LYRIX_SERVER: z.string().default("https://lyrix.vercel.app"),
+
     OSC_TARGET_ADDRESS: z.string().optional().default("localhost"),
     OSC_TARGET_PORT: z.number().optional().default(9000),
 

@@ -75,8 +75,10 @@ Make sure all packages are updated / installed by entering `yarn install` after.
 
 ## Lyrics
 
-Currently (experimentally) fetches lyrics using [musixmatch.com](https://musixmatch.com/)'s internal API and uses them to schedule each lyric in-sync with the song.
-This feature is currently in development and I will **not** provide support on retrieving an internal API. (See .env.example on how to setup)
+~~Currently (experimentally) fetches lyrics using [musixmatch.com](https://musixmatch.com/)'s internal API and uses them to schedule each lyric in-sync with the song.
+This feature is currently in development and I will **not** provide support on retrieving an internal API. (See .env.example on how to setup)~~
+
+Using a custom token can still be used but will now also automatically fetch lyrics from [lyrix.vercel.app](https://github.com/BlueCatSoftware/Lyrix). No need to configure anything!
 
 ## Screenshots
 

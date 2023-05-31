@@ -1,18 +1,9 @@
 import axios from "axios";
 import { Client, Message } from "node-osc";
-import { loadSubtitles, saveSubtitles } from "./cache";
-import config from "./config";
-import { log } from "./logger";
-
-interface Subtitle {
-  text: string;
-  time: {
-    total: number;
-    minutes: number;
-    seconds: number;
-    hundredths: number;
-  };
-}
+import { loadSubtitles, saveSubtitles } from "../cache";
+import config from "../config";
+import { log } from "../logger";
+import { Subtitle } from "./types";
 
 const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   const response = await axios.get(
@@ -92,7 +83,6 @@ const queueLyrics = async (
     queuedLyrics.push(
       setTimeout(() => {
         log(`>> ${lyric.text}`, false);
-        //console.log(`>> ${lyric.text}`);
         oscClient.send(
           new Message(
             "/chatbox/input",
@@ -120,4 +110,4 @@ const getLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   return retrievedLyrics;
 };
 
-export { pullLyrics, queueLyrics, getLyrics, Subtitle };
+export { pullLyrics, queueLyrics, getLyrics };
