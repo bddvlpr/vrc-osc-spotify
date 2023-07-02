@@ -4,6 +4,7 @@ import { loadSubtitles, saveSubtitles } from "../cache";
 import config from "../config";
 import { log } from "../logger";
 import { LyrixSubtitle, Subtitle } from "./types";
+import { setStatus } from "../discord";
 
 const pullLyrics = async (song: SpotifyApi.TrackObjectFull) => {
   const response = await axios.get(
@@ -57,6 +58,7 @@ const queueLyrix = async (
             false
           )
         );
+        setStatus(lyric.text);
       }, lyricTime - playbackProgress)
     );
   });

@@ -28,6 +28,8 @@ const setupConfiguration = () => {
       .transform((s) => parseInt(s, 10)),
 
     LISTENING_SONG_PARAMETER: z.string().optional(),
+
+    DISCORD_TOKEN: z.string().optional(),
   });
 
   return envSchema.parse(process.env);
